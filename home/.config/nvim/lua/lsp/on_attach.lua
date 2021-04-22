@@ -17,18 +17,18 @@ return function(client, bufnr)
         map("n", "K", "<cmd>lua require('lspsaga.hover').render_hover_doc()<CR>", options)
     end
     if client.resolved_capabilities.find_references then
-        map("n", "'re", "<cmd>lua require'telescope.builtin'.lsp_references()<CR>", options)
+        map("n", "gr", "<cmd>lua require'telescope.builtin'.lsp_references()<CR>", options)
     end
     if client.resolved_capabilities.goto_definition then
-        map("n", "'d", "<cmd>lua vim.lsp.buf.definition()<CR>", options)
+        map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", options)
     end
     if client.resolved_capabilities.rename then
-        map("n", "'rn", "<cmd>lua require'lspsaga.rename'.rename()<CR>", options)
+        map("n", "rn", "<cmd>lua require'lspsaga.rename'.rename()<CR>", options)
     end
 
-    map("n", "'i", "<cmd>lua vim.lsp.buf.implementation()<CR>", options)
-    map("n", "'a", "<cmd>lua require'lspsaga.codeaction'.code_action()<CR>", options)
-    map("v", "'a", "<cmd>lua require'lspsaga.codeaction'.range_code_action()<CR>", options)
+    map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", options)
+    map("n", "<leader>a", "<cmd>lua require'lspsaga.codeaction'.code_action()<CR>", options)
+    map("v", "<leader>a", "<cmd>lua require'lspsaga.codeaction'.range_code_action()<CR>", options)
 
     au("cursorhold", "*", 'lua require "lspsaga.diagnostic".show_line_diagnostics()')
     require "timer".add(
@@ -40,8 +40,8 @@ return function(client, bufnr)
         end
     )
 
-    map("n", "[d", "<cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_prev()<CR>", options)
-    map("n", "]d", "<cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()<CR>", options)
+    map("n", "8d", "<cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_prev()<CR>", options)
+    map("n", "9d", "<cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()<CR>", options)
 
     au("bufwritepost", "*", "lua _FMT()")
 end

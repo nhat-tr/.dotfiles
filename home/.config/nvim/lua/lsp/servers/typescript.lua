@@ -1,6 +1,6 @@
 return function(config, on_attach)
     config.typescript.setup {
-        filetypes = {"typescript", "javascript"},
+        filetypes = {"typescript", "javascript", "javascriptreact", "typescriptreact"},
         on_attach = function(client, bufnr)
             on_attach(client, bufnr)
             -- tsserver, stop messing with prettier da fuck!

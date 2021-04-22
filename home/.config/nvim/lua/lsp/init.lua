@@ -1,7 +1,7 @@
 local general_on_attach = require("lsp.on_attach")
 require "lspinstall".setup()
 
-local servers = {"efm", "json", "lua", "typescript", }
+local servers = {"efm", "json", "lua", "typescript", "omnisharp"}
 
 _G.installLspServers = function()
     local existingServers = require "lspinstall".installed_servers()

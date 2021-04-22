@@ -158,6 +158,10 @@ local lsp = {
     {"hrsh7th/vim-vsnip", requires = "hrsh7th/vim-vsnip-integ", config = require("plugins.vim-vsnip")}
 }
 
+local development = {
+    "OmniSharp/omnisharp-vim"
+}
+
 local other = {
     "dstein64/vim-startuptime",
     cmd = {"StartupTime"}
@@ -178,6 +182,7 @@ return require "packer".startup {
         use(ui)
         use(treesitter)
         use(lsp)
+        use(development)
         use(other)
     end,
     config = {
