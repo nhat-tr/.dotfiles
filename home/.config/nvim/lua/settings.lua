@@ -37,7 +37,7 @@ for key, val in pairs(
         background = "dark",
         encoding = "UTF-8",
         list = true,
-        expandtab = true,
+        -- expandtab = true,
         -- listchars = "eol:↩", -- replace chars
         fillchars = "stlnc:-,vert:|" -- splits char
     }

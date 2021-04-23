@@ -27,8 +27,8 @@ return function(client, bufnr)
     end
 
     map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", options)
-    map("n", "<leader>a", "<cmd>lua require'lspsaga.codeaction'.code_action()<CR>", options)
-    map("v", "<leader>a", "<cmd>lua require'lspsaga.codeaction'.range_code_action()<CR>", options)
+    map("n", "<leader>ca", "<cmd>lua require'lspsaga.codeaction'.code_action()<CR>", options)
+    map("v", "<leader>ca", "<cmd>lua require'lspsaga.codeaction'.range_code_action()<CR>", options)
 
     au("cursorhold", "*", 'lua require "lspsaga.diagnostic".show_line_diagnostics()')
     require "timer".add(

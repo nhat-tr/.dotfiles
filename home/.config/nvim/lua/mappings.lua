@@ -9,10 +9,10 @@ for _, mappings in pairs(
         {"n", "<leader>cm", ":e ++ff=dos<cr>"},
         {"n", "<leader>cs", ":let @/=''<cr>"},
         {"n", "<Leader>ne", ':e <C-R>=expand("%:p:h") . "/" <CR>'},
-        {"i", "{<CR>", "{<CR>}<ESC>O", {noremap = true}},
-        {"i", "{<TAB>", "{}<ESC>i", {noremap = true}},
-        {"i", "(<TAB>", "()<ESC>i", {noremap = true}},
-        {"i", "[<TAB>", "[]<ESC>i", {noremap = true}}
+        {"i", "{<CR>", "{<CR>}<ESC>O", {noremap = true}}
+        -- {"i", "{<TAB>", "{}<ESC>i", {noremap = true}},
+        -- {"i", "(<TAB>", "()<ESC>i", {noremap = true}},
+        -- {"i", "[<TAB>", "[]<ESC>i", {noremap = true}}
     }
 ) do
     local mode = mappings[1]
@@ -22,5 +22,5 @@ for _, mappings in pairs(
     map(mode, key, value, options)
 end
 
-vim.cmd('inoremap <expr> <TAB> ("\\<C-n>")')
-vim.cmd('inoremap <expr> <S-TAB> ("\\<C-p>")')
+ vim.cmd('inoremap <expr> <TAB> ("\\<C-n>")')
+ vim.cmd('inoremap <expr> <S-TAB> ("\\<C-p>")')

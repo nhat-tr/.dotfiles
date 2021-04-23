@@ -17,7 +17,7 @@ return function()
     _G.fuzzy_live_grep = function()
         builtin.grep_string {
             shorten_path = true,
-            word_match = "-w",
+            -- word_match = "-w",
             only_sort_text = true,
             search = "",
             vimgrep_arguments = vimgrep_arguments
