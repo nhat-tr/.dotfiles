@@ -38,7 +38,7 @@ for key, val in pairs(
         encoding = "UTF-8",
         list = true,
         expandtab = true,
-        listchars = "eol:↩", -- replace chars
+        -- listchars = "eol:↩", -- replace chars
         fillchars = "stlnc:-,vert:|" -- splits char
     }
 ) do
@@ -87,20 +87,3 @@ au("BufNewFile", "*", ":exe ': !mkdir -p ' . escape(fnamemodify(bufname('%'),':p
 
 cmd("syntax on")
 
--- tmux-like zoom in vim
-function _toggleZoom()
-    if 1 == vim.fn.winnr("$") then
-        return
-    end
-    local restoreCmd = vim.fn.winrestcmd()
-    cmd("wincmd |")
-    cmd("wincmd _")
-    -- If the layout did not change, it's an un-zoom.
-    if restoreCmd == vim.fn.winrestcmd() then
-        cmd("exe t:zoom_restore")
-    else
-        vim.t.zoom_restore = restoreCmd
-    end
-    return
-end
-map("n", "<leader>z", ":lua _toggleZoom()<cr>")

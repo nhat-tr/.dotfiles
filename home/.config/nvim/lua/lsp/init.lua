@@ -9,7 +9,7 @@ require("lspconfig").omnisharp.setup {
 
 require "lspinstall".setup()
 
-local servers = {"efm", "json", "lua", "typescript"}
+local servers = {"efml", "json", "lua", "typescript", "diagnosticls"}
 
 -- local existingServers = require "lspinstall".installed_servers()
 -- for _, name in pairs(existingServers) do

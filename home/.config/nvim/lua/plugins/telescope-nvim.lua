@@ -8,8 +8,7 @@ return function()
             table.insert(target, v)
         end
     end
-    local vimgrep_arguments = concat(conf.vimgrep_arguments,
-                                       {"-g", "!{node_modules,.git}"})
+    local vimgrep_arguments = concat(conf.vimgrep_arguments, {"-g", "!{node_modules,.git}"})
 
     telescope.setup {
         defaults = {mappings = {i = {["<Esc>"] = actions.close, ["<C-u>"] = false}}}
@@ -40,7 +39,9 @@ return function()
         end
 
         local is_git_project = pcall(builtin.git_files, opts)
-        if not is_git_project then builtin.find_files(opts) end
+        if not is_git_project then
+            builtin.find_files(opts)
+        end
     end
     _G.find_files = find_files
 
@@ -79,14 +80,13 @@ return function()
     vim.cmd("command! Commits Telescope git_commits")
     vim.cmd("command! LspAct Telescope lsp_code_actions")
 
-
-    vim.api.nvim_set_keymap("n", "<leader>ff", "<cmd>Files<CR>", {silent = true})
+    vim.api.nvim_set_keymap("n", "<leader><leader>", "<cmd>Files<CR>", {silent = true})
     vim.api.nvim_set_keymap("n", "<Leader>rg", "<cmd>Rg<CR>", {silent = true})
     vim.api.nvim_set_keymap("n", "<Leader>fG", "<cmd>RgPrompt<CR>", {silent = true})
     vim.api.nvim_set_keymap("n", "<Leader>b", "<cmd>Buffers<CR>", {silent = true})
     vim.api.nvim_set_keymap("n", "<Leader>fh", "<cmd>History<CR>", {silent = true})
     vim.api.nvim_set_keymap("n", "<Leader>l", "<cmd>BLines<CR>", {silent = true})
-    vim.api.nvim_set_keymap("n", "<Leader>fr", "<cmd>LspRef<CR>", {silent = true})
+    vim.api.nvim_set_keymap("n", "<Leader>gr", "<cmd>LspRef<CR>", {silent = true})
     vim.api.nvim_set_keymap("n", "<Leader>fs", "<cmd>LspSym<CR>", {silent = true})
 
     vim.api.nvim_set_keymap("n", "<Leader>ga", "<cmd>LspAct<CR>", {silent = true})
