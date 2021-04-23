@@ -1,5 +1,14 @@
 g.mapleader = " "
 
+vim.g.OmniSharp_server_stdio = 1
+
+if vim.fn.has("win32") == 0 then
+    vim.g.OmniSharp_server_use_mono = 1
+end
+
+vim.g.OmniSharp_diagnostic_showid = 1
+vim.g.OmniSharp_typeLookupInPreview = 0
+
 for key, val in pairs(
     {
         clipboard = "unnamedplus", -- enable yank/paste to/from system clipboard
@@ -28,8 +37,9 @@ for key, val in pairs(
         background = "dark",
         encoding = "UTF-8",
         list = true,
-        listchars = "space:·,tab:»»,eol:↩", -- replace chars
-        fillchars = "stlnc:-,vert:¦" -- splits char
+        expandtab = true,
+        listchars = "eol:↩", -- replace chars
+        fillchars = "stlnc:-,vert:|" -- splits char
     }
 ) do
     vim.o[key] = val
@@ -37,7 +47,7 @@ end
 for key, val in pairs(
     {
         signcolumn = "no", -- nothing to the left of line number
-        cursorcolumn = true, -- highlight for current column
+        cursorcolumn = false, -- highlight for current column
         foldnestmax = 10, -- deepest fold is 10 levels
         foldenable = false, -- don't fold by default
         foldmethod = "syntax", -- fold text using syntax
@@ -55,20 +65,6 @@ vim.bo.matchpairs = "(:),{:},[:],<:>"
 
 map("n", "<bs>", "<leader>")
 
--- blink search matches, not leave them visible
-au("cursorhold", "*", "set nohlsearch")
-map("n", "n", ":set hlsearch <cr>n")
-map("n", "N", ":set hlsearch <cr>N")
-map("n", "/", ":set hlsearch <cr>/")
-map("n", "?", ":set hlsearch <cr>?")
--- when using * # ignore smart case
-_G["*"] = function()
-    vim.o.ignorecase = false
-    vim.o.smartcase = false
-    cmd("/" .. fn.expand("<cword>"))
-    vim.o.ignorecase = true
-    vim.o.smartcase = true
-end
 _G["#"] = function()
     vim.o.ignorecase = false
     vim.o.smartcase = false
@@ -76,8 +72,6 @@ _G["#"] = function()
     vim.o.ignorecase = true
     vim.o.smartcase = true
 end
--- case-sensative search for * and #
-map("n", "*", ":lua _G['*']()<cr>")
 map("n", "#", ":lua _G['#']()<cr>")
 
 -- Keep undo history across sessions, by storing in file.

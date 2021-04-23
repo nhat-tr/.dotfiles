@@ -10,6 +10,9 @@ $DPATH/scripts/lnfilepath.sh $DPATH/home/.git* $HOME
 $DPATH/scripts/lnfilepath.sh $DPATH/home/.tmux* $HOME
 $DPATH/scripts/lnfilepath.sh $DPATH/home/.zsh* $HOME
 
+mkdir -p $HOME/.config/nvim
+mkdir -p $HOME/.config/vsnip
+
 $DPATH/scripts/lnfilepath.sh $DPATH/home/.config/nvim/*.lua $HOME/.config/nvim
 $DPATH/scripts/lnfilepath.sh $DPATH/home/.config/nvim/lua/*.lua $HOME/.config/nvim/lua
 $DPATH/scripts/lnfilepath.sh $DPATH/home/.config/nvim/lua/plugins/*.lua $HOME/.config/nvim/lua/plugins

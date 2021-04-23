@@ -1,17 +1,21 @@
-local ensurePackerInstalled = function()
-    local install_path = fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim"
-    if fn.empty(vim.fn.glob(install_path)) > 0 then
-        execute("!git clone https://github.com/wbthomason/packer.nvim " .. install_path)
-        execute "packadd packer.nvim"
-    end
-    cmd("packadd packer.nvim")
+local execute = vim.api.nvim_command
+local fn = vim.fn
+
+local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+
+if fn.empty(fn.glob(install_path)) > 0 then
+    execute("!git clone https://github.com/wbthomason/packer.nvim " .. install_path)
+    execute "packadd packer.nvim"
 end
-ensurePackerInstalled()
+
+local my = function(file)
+    require(file)
+end
+
+require("packer").init({display = {auto_clean = false}})
 
 au("BufWritePost", "**/nvim/lua/plugins/*.lua", "lua reload()")
 au("BufWritePost", "**/nvim/lua/plugins/*.lua", "PackerCompile")
--- cmd [[ autocmd BufWritePost **/nvim/lua/plugins/*.lua lua reload() ]]
--- cmd [[ autocmd BufWritePost **/nvim/lua/plugins/*.lua PackerCompile ]]
 
 local packer = {
     -- Packer can manage itself as an optional plugin

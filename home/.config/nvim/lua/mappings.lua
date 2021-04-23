@@ -1,19 +1,18 @@
 for _, mappings in pairs(
     {
-        {"n", "<c-w>", ":w<cr>"},
-        {"n", "<C-q>", "ZZ"}, -- write and exit from current buffer
         {"n", "Y", "y$"}, -- do Y to yank till the end of the line
-        -- split and navigate to it
-        {"n", "<shift><up>", ":bn"},
-        {"n", "<shift><down>", ":bp"},
-        {"n", "<leader>-", ":split | wincmd j<cr>"},
-        {"n", "<leader>|", ":vsplit | wincmd l<cr>"},
-        {"n", "<leader>rr", ":lua reload()<cr>"}, -- reload config
-        {"n", "zl", "zo"}, -- remap zl back to zo
+        {"n", "<TAB>", ":bn<CR>"},
+        {"n", "<S-TAB>", ":bp<CR>"},
+        {"n", "<C-s>", ":lua reload()<cr>"}, -- reload config
         -- replace selected
         {"n", "R", ":%s///g<left><left>"},
+        {"n", "<leader>cm", ":e ++ff=dos<cr>"},
+        {"n", "<leader>cs", ":let @/=''<cr>"},
+        {"n", "<Leader>ne", ':e <C-R>=expand("%:p:h") . "/" <CR>'},
         {"i", "{<CR>", "{<CR>}<ESC>O", {noremap = true}},
-        {"n", "Q", "q:"},
+        {"i", "{<TAB>", "{}<ESC>i", {noremap = true}},
+        {"i", "(<TAB>", "()<ESC>i", {noremap = true}},
+        {"i", "[<TAB>", "[]<ESC>i", {noremap = true}}
     }
 ) do
     local mode = mappings[1]
@@ -22,3 +21,6 @@ for _, mappings in pairs(
     local options = mappings[4]
     map(mode, key, value, options)
 end
+
+vim.cmd('inoremap <expr> <TAB> ("\\<C-n>")')
+vim.cmd('inoremap <expr> <S-TAB> ("\\<C-p>")')

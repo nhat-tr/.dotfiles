@@ -1,9 +1,9 @@
 return function()
-    map("n", "<c-f>", ":NvimTreeToggle<cr>")
+    map("n", "<leader>t", ":NvimTreeToggle<cr>")
     g.nvim_tree_side = "left"
     g.nvim_tree_width = 30
     g.nvim_tree_auto_close = 1
-    g.nvim_tree_quit_on_open = 1
+    g.nvim_tree_quit_on_open = 0
     g.nvim_tree_follow = 1
     g.nvim_tree_indent_markers = 1
     g.nvim_tree_git_hl = 1
