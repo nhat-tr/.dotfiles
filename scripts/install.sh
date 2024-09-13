@@ -102,25 +102,12 @@ function software() {
   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
   echo "+---------------------------------+"
-  echo "|        Installing Zinit         |"
-  echo "+---------------------------------+"
-  mkdir ~/.zinit
-  git clone https://github.com/zdharma/zinit.git ~/.zinit/bin
-
-  echo "+---------------------------------+"
   echo "|        Installing NeoVim        |"
   echo "+---------------------------------+"
   gem install neovim solargraph
   pip install neovim pynvim
   pip3 install neovim python-language-server pylint pynvim
   yarn global add neovim write-good markdownlint-cli eslint prettier lua-fmt
-
-  local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-
-  if fn.empty(fn.glob(install_path)) > 0 then
-    execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
-    execute 'packadd packer.nvim'
-  end
 
 }
 
