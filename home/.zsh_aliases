@@ -1,5 +1,6 @@
 # Shortcuts
-alias work="cd $HOME/Work"
+alias dev="cd $HOME/Dev"
+alias work="cd $HOME/work"
 
 # Intuitive map function
 # For example, to list all directories that contain a certain file:
@@ -10,5 +11,5 @@ alias map="xargs -n1"
 alias n="nvim"
 alias c="clear"
 alias cc="clear"
-alias refresh="$HOME/.dotfiles/scripts/linkconfigs.sh"
+alias refresh="$HOME/.dotfiles/scripts/linkconfigs.sh && tmux source ~/.config/tmux/.tmux.conf ; source ~/.zshrc"
 alias dtf="cd $HOME/.dotfiles"

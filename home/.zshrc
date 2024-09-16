@@ -72,17 +72,15 @@ ZSH_THEME="robbyrussell"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git)
 
+bindkey -s ^f "tmux-sessionizer\n"
+
 source $ZSH/oh-my-zsh.sh
+source <(fzf --zsh)
 
-source /usr/local/opt/fzf/shell/completion.zsh
-source /usr/local/opt/fzf/shell/key-bindings.zsh
-
-# export MANPATH="/usr/local/man:$MANPATH"
 source $HOME/.zsh_env
 source $HOME/.zsh_settings
-source $HOME/.zsh_langs
+# source $HOME/.zsh_langs
 source $HOME/.zsh_aliases
 source $HOME/.zsh_functions
 # source $HOME/.zsh_fzf
 
-# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

@@ -1,12 +1,17 @@
 #!/usr/bin/env bash
 
+echo "begin"
+
 if [[ $# -eq 1 ]]; then
     selected=$1
+    echo "selected $1"
 else
-    selected=$(find ~/work/builds ~/projects ~/ ~/work ~/personal ~/personal/yt -mindepth 1 -maxdepth 1 -type d | fzf)
+    selected=$(find ~/Dev ~/work/builds ~/projects ~/ ~/work ~/personal ~/personal/yt -mindepth 1 -maxdepth 1 -type d | fzf)
+    echo "selected $selected"
 fi
 
 if [[ -z $selected ]]; then
+    echo "exit"
     exit 0
 fi
 
@@ -15,11 +20,16 @@ tmux_running=$(pgrep tmux)
 
 if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
     tmux new-session -s $selected_name -c $selected
+    echo "new-session -s $selected_name -c $selected"
     exit 0
 fi
 
 if ! tmux has-session -t=$selected_name 2> /dev/null; then
     tmux new-session -ds $selected_name -c $selected
+    echo "new-session -ds $selected_name -c $selected"
 fi
 
 tmux switch-client -t $selected_name
+echo "switch-client -t $selected_name"
+
+echo "end"

@@ -12,6 +12,8 @@ $DPATH/scripts/lnfilepath.sh $DPATH/home/.zsh* $HOME
 mkdir -p $HOME/.config/nvim
 mkdir -p $HOME/.config/tmux
 mkdir -p $HOME/.config/zsh
+mkdir -p $HOME/.local/bin
 
 $DPATH/scripts/lnfilepath.sh $DPATH/home/.tmux* $HOME/.config/tmux
 $DPATH/scripts/lnfilepath.sh $DPATH/home/.config/nvim/* $HOME/.config/nvim
+$DPATH/scripts/lnfilepath.sh $DPATH/.local/bin/scripts/tmux-sessionizer $HOME/.local/bin
