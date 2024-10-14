@@ -5,57 +5,143 @@
 return {
   {
     'lewis6991/gitsigns.nvim',
-    opts = {
-      on_attach = function(bufnr)
-        local gitsigns = require 'gitsigns'
+    event = 'BufRead',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      local signs = require 'gitsigns'
+      signs.setup {
+        signs = {
+          add = { text = '▎' },
+          change = { text = '▎' },
+          delete = { text = '_' },
+          topdelete = { text = '‾' },
+          changedelete = { text = '~' },
+          untracked = { text = '┆' },
+        },
+        signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`
+        numhl = false, -- Toggle with `:Gitsigns toggle_numhl`
+        linehl = false, -- Toggle with `:Gitsigns toggle_linehl`
+        word_diff = false, -- Toggle with `:Gitsigns toggle_word_diff`
+        watch_gitdir = {
+          interval = 700,
+          follow_files = true,
+        },
+        attach_to_untracked = true,
+        current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
+        current_line_blame_opts = {
+          virt_text = true,
+          virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
+          delay = 700,
+          ignore_whitespace = false,
+        },
+        current_line_blame_formatter = '<author>, <author_time:%Y-%m-%d> - <summary>',
+        sign_priority = 6,
+        update_debounce = 100,
+        status_formatter = nil, -- Use default
+        max_file_length = 40000,
+        preview_config = {
+          -- Options passed to nvim_open_win
+          style = 'minimal',
+          relative = 'cursor',
+          row = 0,
+          col = 1,
+        },
+        on_attach = function(bufnr)
+          local gs = package.loaded.gitsigns
 
-        local function map(mode, l, r, opts)
-          opts = opts or {}
-          opts.buffer = bufnr
-          vim.keymap.set(mode, l, r, opts)
-        end
-
-        -- Navigation
-        map('n', ']c', function()
-          if vim.wo.diff then
-            vim.cmd.normal { ']c', bang = true }
-          else
-            gitsigns.nav_hunk 'next'
+          local function map(mode, l, r, opts)
+            opts = opts or {}
+            opts.buffer = bufnr
+            vim.keymap.set(mode, l, r, opts)
           end
-        end, { desc = 'Jump to next git [c]hange' })
 
-        map('n', '[c', function()
-          if vim.wo.diff then
-            vim.cmd.normal { '[c', bang = true }
-          else
-            gitsigns.nav_hunk 'prev'
-          end
-        end, { desc = 'Jump to previous git [c]hange' })
+          -- ╭──────────────────────────────────────────────────────────╮
+          -- │ Keymappings                                              │
+          -- ╰──────────────────────────────────────────────────────────╯
 
-        -- Actions
-        -- visual mode
-        map('v', '<leader>hs', function()
-          gitsigns.stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
-        end, { desc = 'stage git hunk' })
-        map('v', '<leader>hr', function()
-          gitsigns.reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
-        end, { desc = 'reset git hunk' })
-        -- normal mode
-        map('n', '<leader>hs', gitsigns.stage_hunk, { desc = 'git [s]tage hunk' })
-        map('n', '<leader>hr', gitsigns.reset_hunk, { desc = 'git [r]eset hunk' })
-        map('n', '<leader>hS', gitsigns.stage_buffer, { desc = 'git [S]tage buffer' })
-        map('n', '<leader>hu', gitsigns.undo_stage_hunk, { desc = 'git [u]ndo stage hunk' })
-        map('n', '<leader>hR', gitsigns.reset_buffer, { desc = 'git [R]eset buffer' })
-        map('n', '<leader>hp', gitsigns.preview_hunk, { desc = 'git [p]review hunk' })
-        map('n', '<leader>hb', gitsigns.blame_line, { desc = 'git [b]lame line' })
-        map('n', '<leader>hd', gitsigns.diffthis, { desc = 'git [d]iff against index' })
-        map('n', '<leader>hD', function()
-          gitsigns.diffthis '@'
-        end, { desc = 'git [D]iff against last commit' })
-        -- Toggles
-        map('n', '<leader>tb', gitsigns.toggle_current_line_blame, { desc = '[T]oggle git show [b]lame line' })
-        map('n', '<leader>tD', gitsigns.toggle_deleted, { desc = '[T]oggle git show [D]eleted' })
-      end,
+          -- Navigation
+          map('n', ']c', function()
+            if vim.wo.diff then
+              return ']c'
+            end
+            vim.schedule(function()
+              gs.next_hunk()
+            end)
+            return '<Ignore>'
+          end, { expr = true })
+
+          map('n', '[c', function()
+            if vim.wo.diff then
+              return '[c'
+            end
+            vim.schedule(function()
+              gs.prev_hunk()
+            end)
+            return '<Ignore>'
+          end, { expr = true })
+
+          -- Actions
+          map({ 'n', 'v' }, '<leader>ghs', gs.stage_hunk, { desc = 'stage hunk' })
+          map({ 'n', 'v' }, '<leader>ghr', gs.reset_hunk, { desc = 'reset hunk' })
+          map('n', '<leader>ghS', gs.stage_buffer, { desc = 'stage buffer' })
+          map('n', '<leader>ghu', gs.undo_stage_hunk, { desc = 'undo stage' })
+          map('n', '<leader>ghR', gs.reset_buffer, { desc = 'reset buffer' })
+          map('n', '<leader>ghp', gs.preview_hunk, { desc = 'preview hunk' })
+          map('n', '<leader>gm', function()
+            gs.blame_line { full = true }
+          end, { desc = 'blame line' })
+          map('n', '<leader>ghd', gs.diffthis, { desc = 'diff hunk' })
+          map('n', '<leader>ght', gs.toggle_deleted, { desc = 'toggle deleted' })
+
+          -- Text object
+          map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+        end,
+      }
+    end,
+    keys = {
+      { '<leader>ghd' },
+      { '<leader>ghp' },
+      { '<leader>ghR' },
+      { '<leader>ghr' },
+      { '<leader>ghs' },
+      { '<leader>ghS' },
+      { '<leader>ght' },
+      { '<leader>ghu' },
     },
+  },
+
+  {
+    'ThePrimeagen/git-worktree.nvim',
+    lazy = false,
+    -- config = function()
+    --   require 'nhat.plugins.git.worktree'
+    -- end,
+    opts = {
+      change_directory_command = 'cd', -- default: "cd",
+      update_on_change = true, -- default: true,
+      update_on_change_command = 'e .', -- default: "e .",
+      clearjumps_on_change = true, -- default: true,
+      autopush = false, -- default: false,
+    },
+    keys = {
+      { '<Leader>gww', desc = 'worktrees' },
+      { '<Leader>gwc', desc = 'create worktree' },
+    },
+  },
+
+  {
+    'kdheepak/lazygit.nvim',
+    cmd = {
+      'LazyGit',
+      'LazyGitCurrentFile',
+      'LazyGitFilterCurrentFile',
+      'LazyGitFilter',
+    },
+    keys = {
+      { '<Leader>gg', '<cmd>LazyGit<CR>', desc = 'lazygit' },
+    },
+    config = function()
+      vim.g.lazygit_floating_window_scaling_factor = 0.95
+    end,
   },
 }
